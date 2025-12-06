@@ -1,0 +1,24 @@
+{
+  "name": "shopping-ecommerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22.17.1"
+  },
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayobami960/expo-shopping.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ayobami960/expo-shopping/issues"
+  },
+  "homepage": "https://github.com/Ayobami960/expo-shopping#readme",
+  "description": ""
+}
