@@ -72,7 +72,7 @@ export async function updateProduct(req, res) {
 
         if (name) product.name = name;
         if (description) product.description = description;
-        if (price) product.price = parseFloat(price);
+        if (price !== undefined) product.price = parseFloat(price);
         if (stock !== undefined) product.stock = parseInt(stock);
         if (category) product.category = category;
 
@@ -150,7 +150,7 @@ export async function updateOrdersStatus(req, res) {
 }
 
 
-export async function getAllCustormers(_, res) {
+export async function getAllCustomers(_, res) {
     try {
         const custormers = await User.find().sort({createdAt: -1}); // latest user first
         res.status(200).json({custormers});
