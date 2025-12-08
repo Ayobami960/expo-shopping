@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  createProduct, getAllCustormers, getAllOrders, getAllProducts, getDashboardStats, updateOrdersStatus, updateProduct } from "../controllers/admin.controller.js";
+import {  createProduct, getAllCustomers, getAllOrders, getAllProducts, getDashboardStats, updateOrdersStatus, updateProduct } from "../controllers/admin.controller.js";
 import { adminOnly, protectRoute } from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js";
 
@@ -16,7 +16,7 @@ router.put("/products/:id", upload.array("images", 3),  updateProduct);
 router.get("/orders",  getAllOrders);
 router.patch("/orders/:orderId/status",  updateOrdersStatus);
 
-router.get("/custormers",  getAllCustormers);
+router.get("/customers",  getAllCustomers);
 
 router.get("/stats",  getDashboardStats);
 

@@ -150,7 +150,7 @@ export async function updateOrdersStatus(req, res) {
 }
 
 
-export async function getAllCustormers(_, res) {
+export async function getAllCustomers(_, res) {
     try {
         const custormers = await User.find().sort({createdAt: -1}); // latest user first
         res.status(200).json({custormers});
