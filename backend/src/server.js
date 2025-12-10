@@ -3,9 +3,11 @@ import path from "path";
 import { clerkMiddleware } from "@clerk/express"
 import { serve } from "inngest/express"
 import cors from "cors"
+import { Webhook } from "svix";
 
+
+// import { functions, inngest } from "./config/inngest.js";
 import { functions, inngest } from "./config/inngest.js";
-
 
 import { ENV } from "./config/env.js";
 import { connectDB } from "./config/db.js";
@@ -18,17 +20,36 @@ import productRoutes from "./routes/product.route.js"
 import cartRoutes from "./routes/cart.route.js"
 
 
-
 const app = express();
 
 const __dirname = path.resolve();
+
+//  FIX: Webhook BEFORE express.json()
+const clerkWebhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
+
+app.post(
+  "/api/inngest",
+  express.raw({ type: "application/json" }),
+  (req, res, next) => {
+    try {
+      clerkWebhook.verify(req.body, req.headers);
+      next();
+    } catch (err) {
+      return res.status(400).json({ message: "Invalid Clerk signature" });
+    }
+  },
+  serve({ client: inngest, functions })  // <-- NOW YOUR FUNCTIONS RUN
+);
 
 app.use(express.json());
 app.use(clerkMiddleware()); // this middle where adds auth object under the req => req.auth
 // credentials: true allows the browser to send the cookies to the server with the request
 app.use(cors({origin: ENV.CLIENT_URL, credentials: true}));
 
-app.use("/api/inngest", serve({ client: inngest, functions }));
+
+
+
+
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
