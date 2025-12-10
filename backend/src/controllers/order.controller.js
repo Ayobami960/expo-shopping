@@ -51,8 +51,7 @@ export async function getUserOrders(req, res) {
             .populate("orderItems.product")
             .sort({ createdAt: -1 });
 
-        // check if each order has neen reviewed
-        // This functon is called double bang operator in js
+        // check if each order has been reviewed  This functon is called double bang operator in js
         const ordersWithReviewStatus = await Promise.all(
             orders.map(async (order) => {
                 const review = await Review.findOne({orderId: order._id});

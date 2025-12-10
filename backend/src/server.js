@@ -23,10 +23,9 @@ app.use(express.json());
 app.use(clerkMiddleware()); // this middle where adds auth object under the req => req.auth
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
-
-app.use("api/admin", adminRoutes)
-app.use("api/users", userRoutes)
-app.use("api/orders", orderRoutes)
+app.use("/api/admin", adminRoutes)
+app.use("/api/users", userRoutes)
+app.use("/api/orders", orderRoutes)
 
 app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "Success" });
