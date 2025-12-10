@@ -11,6 +11,7 @@ import { connectDB } from "./config/db.js";
 
 import adminRoutes from "./routes/admin.route.js"
 import userRoutes from "./routes/user.route.js"
+import orderRoutes from "./routes/order.route.js"
 
 
 
@@ -23,8 +24,9 @@ app.use(clerkMiddleware()); // this middle where adds auth object under the req 
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
-app.use("api/admin", adminRoutes)
-app.use("api/users", userRoutes)
+app.use("/api/admin", adminRoutes)
+app.use("/api/users", userRoutes)
+app.use("/api/orders", orderRoutes);
 
 app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "Success" });
