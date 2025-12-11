@@ -3,7 +3,7 @@ import path from "path";
 import { clerkMiddleware } from "@clerk/express"
 import { serve } from "inngest/express"
 import cors from "cors"
-import { Webhook } from "svix";
+// import { Webhook } from "svix";
 
 
 // import { functions, inngest } from "./config/inngest.js";
@@ -25,21 +25,21 @@ const app = express();
 const __dirname = path.resolve();
 
 //  FIX: Webhook BEFORE express.json()
-const clerkWebhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
+// const clerkWebhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
-app.post(
-  "/api/inngest",
-  express.raw({ type: "application/json" }),
-  (req, res, next) => {
-    try {
-      clerkWebhook.verify(req.body, req.headers);
-      next();
-    } catch (err) {
-      return res.status(400).json({ message: "Invalid Clerk signature" });
-    }
-  },
-  serve({ client: inngest, functions })  // <-- NOW YOUR FUNCTIONS RUN
-);
+// app.post(
+//   "/api/inngest",
+//   express.raw({ type: "application/json" }),
+//   (req, res, next) => {
+//     try {
+//       clerkWebhook.verify(req.body, req.headers);
+//       next();
+//     } catch (err) {
+//       return res.status(400).json({ message: "Invalid Clerk signature" });
+//     }
+//   },
+//   serve({ client: inngest, functions })  // <-- NOW YOUR FUNCTIONS RUN
+// );
 
 app.use(express.json());
 app.use(clerkMiddleware()); // this middle where adds auth object under the req => req.auth
